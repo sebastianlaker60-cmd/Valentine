@@ -1,71 +1,107 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Important Question</title>
-  <style>
-    body{
-      margin:0; height:100vh; display:flex; align-items:center; justify-content:center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #0f0f10; color:#fff;
-    }
-    .card{
-      width:min(520px, 92vw);
-      padding:28px;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-      text-align:center;
-    }
-    h1{ margin:0 0 14px; font-size: 30px; }
-    p{ margin:0 0 20px; opacity:.85; }
-    .btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-    button{
-      border:0; border-radius:12px; padding:12px 18px; font-size:16px;
-      cursor:pointer; transition: transform .08s ease;
-    }
-    button:active{ transform: scale(.98); }
-    .yes{ background:#ff3d7f; color:white; }
-    .no{ background:#2a2a2e; color:white; border:1px solid rgba(255,255,255,.12); position:relative; }
-    .tiny{ margin-top:14px; font-size:12px; opacity:.6; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>…</title>
+
+<style>
+  body {
+    margin:0;
+    height:100vh;
+    background:#050505;
+    color:#eaeaea;
+    font-family: "Courier New", monospace;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .box {
+    width:min(520px, 92vw);
+    text-align:center;
+    padding:30px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.03);
+    box-shadow:0 0 40px rgba(255,0,0,.15);
+  }
+  h1 {
+    font-size:22px;
+    margin-bottom:16px;
+    letter-spacing:1px;
+  }
+  p {
+    opacity:.85;
+    margin-bottom:22px;
+    min-height:40px;
+  }
+  button {
+    background:#111;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.2);
+    padding:10px 16px;
+    font-size:14px;
+    cursor:pointer;
+    border-radius:6px;
+  }
+  button:hover {
+    background:#1a1a1a;
+  }
+  .blink {
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity:.2 }
+    50% { opacity:1 }
+  }
+</style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>Hey… I have a question 😳💘</h1>
-    <p>Will you be my Valentine?</p>
+<div class="box">
+  <h1 id="title">Hello.</h1>
+  <p id="text" class="blink">Loading…</p>
+  <button id="btn" style="display:none;">Continue</button>
+</div>
 
-    <div class="btns">
-      <button class="yes" id="yesBtn">Yes 😌</button>
-      <button class="no" id="noBtn">No 🙄</button>
-    </div>
+<script>
+const steps = [
+  "You shouldn’t have opened this.",
+  "Can I ask you something?",
+  "Are you alone right now?",
+  "Don’t worry… this is just between us.",
+  "Do you ever feel like someone is watching you?",
+  "It’s okay. Everyone does.",
+  "I like how you answer without answering.",
+  "You’re doing great.",
+  "Just one last question."
+];
 
-    <div class="tiny">C’mon… choose the right answer 🥀😭</div>
-  </div>
+let i = 0;
+const text = document.getElementById("text");
+const btn = document.getElementById("btn");
 
-  <script>
-    // TikTok link she gets sent when Yes is clicked
-    const memeUrl = "https://vt.tiktok.com/ZSabkGfRb/";
+setTimeout(() => {
+  text.classList.remove("blink");
+  text.innerText = steps[i];
+  btn.style.display = "inline-block";
+}, 2000);
 
-    document.getElementById("yesBtn").addEventListener("click", () => {
-      window.location.href = memeUrl;
-    });
-
-    // Make the "No" button run away
-    const noBtn = document.getElementById("noBtn");
-    const moveNo = () => {
-      const pad = 20;
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - pad*2) + pad;
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - pad*2) + pad;
-      noBtn.style.position = "fixed";
-      noBtn.style.left = x + "px";
-      noBtn.style.top  = y + "px";
-    };
-
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); }, {passive:false});
-  </script>
+btn.onclick = () => {
+  i++;
+  if (i < steps.length) {
+    text.innerText = steps[i];
+  } else {
+    text.innerHTML = "I already know your answer.";
+    btn.style.display = "none";
+    setTimeout(() => {
+      text.innerHTML = "😈";
+    }, 1200);
+    setTimeout(() => {
+      // CHANGE THIS LINK (TikTok / meme / video)
+      window.location.href = "https://vt.tiktok.com/ZSabkGfRb/";
+    }, 2200);
+  }
+};
+</script>
 </body>
 </html>
